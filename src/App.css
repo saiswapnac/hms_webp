@@ -1,55 +1,26 @@
-/* Reset */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
 background-color: #D6EFEA;}
-/* Navbar */
-.navbar {
-  background-color: #2D0320;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-/* Title */
+
 .logo {
   color: #99D5C9;
   margin: 0;
 }
 
-/* Links */
-.nav-links {
-  display: flex;
-  align-items: center;
-}
 
-.nav-links a {
-  color: #ffffff;
-  margin-left: 20px;
-  text-decoration: none;
-  font-size: 16px;
-  transition: 0.2s;
-}
-
-.nav-links a:hover {
-  color: #99D5C9;
-}
-
-/* Page Container */
 .container {
   width: 80%;
   margin: 30px auto;
 }
 
-/* Headings */
 h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #2D0320;
 }
 
-/* Card Design */
 .card {
   background-color: #ffffff;
   padding: 15px;
@@ -59,7 +30,6 @@ h2 {
   border-left: 5px solid #99D5C9;
 }
 
-/* Form styling */
 input {
   width: 95%;
   padding: 10px;
@@ -68,7 +38,15 @@ input {
   border-radius: 5px;
 }
 
-/* Button */
+input,
+select {
+  width: 95%;
+  padding: 10px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 button {
   padding: 10px 15px;
   background-color: #2D0320;
@@ -84,7 +62,6 @@ button:hover {
   color: #2D0320;
 }
 
-/* Login box */
 .login-box {
   width: 300px;
   margin: 120px auto;
@@ -96,8 +73,84 @@ button:hover {
   border-top: 5px solid #2D0320;
 }
 
-/* Section headings */
 .container h3 {
   margin-top: 25px;
   color: #2D0320;
+}
+
+.card span {
+  display: block;
+  margin-top: 5px;
+}
+
+.card button {
+  margin-top: 8px;
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.doctor-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-top: 4px solid #99D5C9;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.doctor-info h3 {
+  margin: 0;
+  color: #2D0320;
+}
+
+.doctor-info p {
+  margin: 8px 0 15px;
+  color: #555;
+}
+
+.btn {
+  padding: 8px;
+  background-color: #2D0320;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #99D5C9;
+  color: #2D0320;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal p {
+  margin: 10px 0;
 }

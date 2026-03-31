@@ -1,32 +1,48 @@
 import Navbar from "./Navbar";
 import { useState } from "react";
+import { doctors, patients } from "../data/data";
 
 function Appointments({ appointments, setAppointments }) {
   const [patient, setPatient] = useState("");
   const [doctor, setDoctor] = useState("");
   const [date, setDate] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = () => {
-    if (!patient || !doctor || !date) {
-      alert("Please fill all fields");
+    const trimmed = patient.trim();
+
+    if (!trimmed || !doctor || !date) {
+      setMessage("Please fill all fields");
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+    if (date < today) {
+      setMessage("Invalid date");
       return;
     }
 
     const newAppointment = {
-      id: appointments.length + 1,
-      patient,
+      id: Date.now(),
+      patient: trimmed,
       doctor,
-      date
+      date,
+      status: "Pending"
     };
 
-    // 🔥 THIS is the key line
     setAppointments([...appointments, newAppointment]);
-
-    alert("Appointment booked successfully!");
+    setMessage("Appointment booked!");
 
     setPatient("");
     setDoctor("");
     setDate("");
+  };
+
+  const finishAppointment = (id) => {
+    const updated = appointments.map((app) =>
+      app.id === id ? { ...app, status: "Completed" } : app
+    );
+    setAppointments(updated);
   };
 
   return (
@@ -36,19 +52,27 @@ function Appointments({ appointments, setAppointments }) {
       <div className="container">
         <h2>Book Appointment</h2>
 
-        {/* FORM */}
         <div className="card">
-          <input
-            placeholder="Patient Name"
+          <select
             value={patient}
             onChange={(e) => setPatient(e.target.value)}
-          />
+          >
+            <option value="">Select Patient</option>
+            {patients.map((pat) => (
+              <option key={pat.id} value={pat.name}>
+                {pat.name} (Age: {pat.age})
+              </option>
+            ))}
+          </select>
 
-          <input
-            placeholder="Doctor Name"
-            value={doctor}
-            onChange={(e) => setDoctor(e.target.value)}
-          />
+          <select value={doctor} onChange={(e) => setDoctor(e.target.value)}>
+            <option value="">Select Doctor</option>
+            {doctors.map((doc) => (
+              <option key={doc.id} value={doc.name}>
+                {doc.name} ({doc.spec})
+              </option>
+            ))}
+          </select>
 
           <input
             type="date"
@@ -56,18 +80,29 @@ function Appointments({ appointments, setAppointments }) {
             onChange={(e) => setDate(e.target.value)}
           />
 
-          <button onClick={handleSubmit}>Book Appointment</button>
+          <button onClick={handleSubmit}>Book</button>
+
+          {message && <p>{message}</p>}
         </div>
 
-        {/* DISPLAY ALL APPOINTMENTS */}
-        <h3>All Appointments</h3>
+        <h3>Appointments</h3>
 
         {appointments.length === 0 ? (
-          <p>No appointments yet</p>
+          <p>No appointments</p>
         ) : (
           appointments.map((app) => (
             <div className="card" key={app.id}>
-              {app.patient} → {app.doctor} on {app.date}
+              <strong>{app.patient}</strong> → {app.doctor} ({app.date})
+
+              <span className={`status ${app.status.toLowerCase()}`}>
+                {app.status}
+              </span>
+
+              {app.status === "Pending" && (
+                <button onClick={() => finishAppointment(app.id)}>
+                  Finish
+                </button>
+              )}
             </div>
           ))
         )}

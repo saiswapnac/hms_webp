@@ -9,16 +9,26 @@ function Contact() {
         <h2>Contact Us</h2>
 
         <div className="card">
-          <p><b>Hospital Name:</b> Usui Takumi Hospital</p>
-          <p><b>Address:</b> 123 Main Road, Bangalore, Karnataka</p>
-          <p><b>Phone:</b> +91 8792894820</p>
-          <p><b>Email:</b> saiswapna.2024@vitstudent.ac.in</p>
+          <h3>Hospital Information</h3>
+          <p><strong>Name:</strong> Usui Takumi Hospital</p>
+          <p><strong>Address:</strong> 123 Main Road, Bangalore, Karnataka</p>
+          <p><strong>Phone:</strong> +91 8792894820</p>
+          <p><strong>Email:</strong> saiswapna.2024@vitstudent.ac.in</p>
         </div>
 
         <div className="card">
-          <h3>About</h3>
+          <h3>Working Hours</h3>
+          <p>Monday – Friday: 9:00 AM – 6:00 PM</p>
+          <p>Saturday: 10:00 AM – 4:00 PM</p>
+          <p>Sunday: Emergency Only</p>
+        </div>
+
+        <div className="card">
+          <h3>About This System</h3>
           <p>
-            Our hospital's management system was made by Saiswapna Chakraborty (24BCE0617), a student of VIT University. This system is designed to manage hospital operations efficiently, including patient records, doctor information, and appointment scheduling.
+            This Hospital Management System was developed by 
+            <strong> Saiswapna Chakraborty (24BCE0617)</strong> from VIT University.
+            It helps manage patient records, doctor information, and appointment scheduling efficiently.
           </p>
         </div>
       </div>

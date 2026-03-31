@@ -1,18 +1,34 @@
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
-  return (
-    <div className="navbar">
-      <h3 className="logo">Hospital Management System</h3>
+  const navigate = useNavigate();
 
-      <div className="nav-links">
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/doctors">Doctors</Link>
-        <Link to="/patients">Patients</Link>
-        <Link to="/appointments">Appointments</Link>
-        <Link to="/contact">Contact</Link>
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    navigate("/");
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="nav-container">
+        <NavLink to="/dashboard" className="logo">
+          HMS for UTH
+        </NavLink>
+
+        <div className="nav-links">
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/doctors">Doctors</NavLink>
+          <NavLink to="/patients">Patients</NavLink>
+          <NavLink to="/appointments">Appointments</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
+
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 }
 

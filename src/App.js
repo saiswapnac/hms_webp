@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 import Login from "./components/Login";
@@ -10,7 +10,16 @@ import Appointments from "./components/Appointments";
 import Contact from "./components/Contact";
 
 function App() {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState(() => {
+    const saved = localStorage.getItem("appointments");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("appointments", JSON.stringify(appointments));
+  }, [appointments]);
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   return (
     <Router>
@@ -19,22 +28,26 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={<Dashboard appointments={appointments} />}
+          element={isLoggedIn ? <Dashboard appointments={appointments} /> : <Login />}
         />
 
         <Route
           path="/appointments"
           element={
-            <Appointments
-              appointments={appointments}
-              setAppointments={setAppointments}
-            />
+            isLoggedIn ? (
+              <Appointments
+                appointments={appointments}
+                setAppointments={setAppointments}
+              />
+            ) : (
+              <Login />
+            )
           }
         />
 
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/patients" element={<Patients />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/doctors" element={isLoggedIn ? <Doctors /> : <Login />} />
+        <Route path="/patients" element={isLoggedIn ? <Patients /> : <Login />} />
+        <Route path="/contact" element={isLoggedIn ? <Contact /> : <Login />} />
       </Routes>
     </Router>
   );
