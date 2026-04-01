@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useState } from "react";
 import "./App.css";
 
 import Login from "./components/Login";
@@ -8,46 +8,62 @@ import Doctors from "./components/Doctors";
 import Patients from "./components/Patients";
 import Appointments from "./components/Appointments";
 import Contact from "./components/Contact";
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
+
+import { patients as initialPatients } from "./data/data";
+
+function NavbarWrapper() {
+  const location = useLocation();
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const hideNavbarOn = ["/", "/login"];
+
+  return isLoggedIn && !hideNavbarOn.includes(location.pathname) ? (
+    <Navbar />
+  ) : null;
+}
 
 function App() {
-  const [appointments, setAppointments] = useState(() => {
-    const saved = localStorage.getItem("appointments");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [appointments, setAppointments] = useState([]);
 
-  useEffect(() => {
-    localStorage.setItem("appointments", JSON.stringify(appointments));
-  }, [appointments]);
-
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const [patients, setPatients] = useState(initialPatients);
 
   return (
     <Router>
+      <NavbarWrapper />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
 
         <Route
           path="/dashboard"
-          element={isLoggedIn ? <Dashboard appointments={appointments} /> : <Login />}
+          element={<Dashboard appointments={appointments} />}
         />
 
         <Route
           path="/appointments"
           element={
-            isLoggedIn ? (
-              <Appointments
-                appointments={appointments}
-                setAppointments={setAppointments}
-              />
-            ) : (
-              <Login />
-            )
+            <Appointments
+              appointments={appointments}
+              setAppointments={setAppointments}
+              patients={patients}
+            />
           }
         />
 
-        <Route path="/doctors" element={isLoggedIn ? <Doctors /> : <Login />} />
-        <Route path="/patients" element={isLoggedIn ? <Patients /> : <Login />} />
-        <Route path="/contact" element={isLoggedIn ? <Contact /> : <Login />} />
+        <Route path="/doctors" element={<Doctors />} />
+
+        <Route
+          path="/patients"
+          element={
+            <Patients
+              patients={patients}
+              setPatients={setPatients}
+            />
+          }
+        />
+
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );

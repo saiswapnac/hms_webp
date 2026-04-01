@@ -1,60 +1,69 @@
-import Navbar from "./Navbar";
 import { useState } from "react";
-import { patients as initialPatients } from "../data/data";
 
-function Patients() {
-  const [patients, setPatients] = useState(initialPatients);
-  const [search, setSearch] = useState("");
-
+function Patients({ patients, setPatients }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [disease, setDisease] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
 
   const addPatient = () => {
-    if (!name || !age || !disease) return;
+    if (!name || !age || !gender || !phone) return;
 
     const newPatient = {
       id: Date.now(),
       name,
       age,
-      disease
+      gender,
+      phone
     };
 
     setPatients([...patients, newPatient]);
+
     setName("");
     setAge("");
-    setDisease("");
+    setGender("");
+    setPhone("");
   };
 
   return (
     <div>
-      <Navbar />
-
       <div className="container">
         <h2>Patients</h2>
 
-        <input
-          placeholder="Search patient"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
         <div className="card">
-          <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} />
-          <input placeholder="Disease" value={disease} onChange={(e) => setDisease(e.target.value)} />
-          <button onClick={addPatient}>Add</button>
+
+          <input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <input
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+
+          <input
+            placeholder="Phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+
+          <button onClick={addPatient}>Add Patient</button>
         </div>
 
-        {patients
-          .filter((p) =>
-            p.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((p) => (
-            <div className="card" key={p.id}>
-              {p.name} | {p.age} | {p.disease}
-            </div>
-          ))}
+        {patients.map((p) => (
+          <div className="card" key={p.id}>
+            <strong>{p.name}</strong> | Age: {p.age} | {p.gender} | {p.phone}
+          </div>
+        ))}
       </div>
     </div>
   );

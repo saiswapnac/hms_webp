@@ -1,17 +1,13 @@
-import Navbar from "./Navbar";
-
 function Contact() {
   return (
     <div>
-      <Navbar />
-
       <div className="container">
         <h2>Contact Us</h2>
 
         <div className="card">
           <h3>Hospital Information</h3>
           <p><strong>Name:</strong> Usui Takumi Hospital</p>
-          <p><strong>Address:</strong> 123 Main Road, Bangalore, Karnataka</p>
+          <p><strong>Address:</strong> 123 Main Road, Bannerghatta, Bangalore, Karnataka</p>
           <p><strong>Phone:</strong> +91 8792894820</p>
           <p><strong>Email:</strong> saiswapna.2024@vitstudent.ac.in</p>
         </div>
