@@ -37,7 +37,10 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={<Dashboard appointments={appointments} />}
+          element={<Dashboard 
+              appointments={appointments}
+              patients={patients}
+            />}
         />
 
         <Route

@@ -2,12 +2,6 @@ import { doctors, patients } from "../data/data";
 
 function Dashboard({ appointments }) {
 
-  const today = new Date().toISOString().split("T")[0];
-
-  const todayAppointments = appointments.filter(
-    (a) => a.date === today
-  );
-
   const pending = appointments.filter(
     (a) => a.status === "Pending"
   ).length;
@@ -22,13 +16,17 @@ function Dashboard({ appointments }) {
 
   const recent = [...appointments].slice(-3).reverse();
 
-  const doctorStats = doctors.map(doc => {
+  const doctorStats = doctors
+  .map((doc) => {
     const count = appointments.filter(
-      (a) => a.doctor?.name === doc.name
+      (a) =>
+        a.doctor?.name === doc.name &&
+        a.status !== "Cancelled"
     ).length;
 
     return { name: doc.name, count };
-  });
+  })
+  .filter((doc) => doc.count > 0); 
 
   return (
     <div>
@@ -39,11 +37,7 @@ function Dashboard({ appointments }) {
 
         <div className="card">Doctors: {doctors.length}</div>
         <div className="card">Patients: {patients.length}</div>
-        <div className="card">Appointments: {appointments.length}</div>
-
-        <div className="card">
-          Today: {todayAppointments.length} / {appointments.length}
-        </div>
+        <div className="card">Total Appointments: {appointments.length}</div>
 
         <div className="card">Pending: {pending}</div>
         <div className="card">Completed: {completed}</div>
@@ -51,7 +45,7 @@ function Dashboard({ appointments }) {
 
         <div className="card">
           <h3>Doctor Workload</h3>
-          {doctorStats.map(d => (
+          {doctorStats.map((d) => (
             <p key={d.name}>
               {d.name}: {d.count} appointments
             </p>
@@ -66,7 +60,7 @@ function Dashboard({ appointments }) {
           ) : (
             recent.map((a) => (
               <p key={a.id}>
-                {a.patient?.name} → {a.doctor?.name}
+                {a.patient?.name} → {a.doctor?.name} ({a.status})
               </p>
             ))
           )}
