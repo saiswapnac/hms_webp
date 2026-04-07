@@ -38,7 +38,9 @@ function Login() {
 
       <button onClick={handleLogin}>Login</button>
 
-      {error && <p className="login-error">{error}</p>}
+      {error && <p className="login-error">{error}</p>} 
+      <br></br><br></br>  
+      <p style={{ color: "grey" }}>(admin - 123)</p>
     </div>
   );
 }
