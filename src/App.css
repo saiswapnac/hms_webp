@@ -74,6 +74,7 @@ button:hover {
   font-size: 18px;
 }
 
+
 .doctor-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -91,6 +92,7 @@ button:hover {
   flex-direction: column;
   justify-content: space-between;
 }
+
 
 .doctor-info h3 {
   margin: 0;
@@ -110,6 +112,7 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
 }
+
 
 .btn:hover {
   background-color: #99D5C9;
@@ -135,6 +138,8 @@ button:hover {
   width: 300px;
   text-align: center;
 }
+
+
 
 .status.cancelled {
   background-color: red;
@@ -172,6 +177,8 @@ button:hover {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border-top: 4px solid #2563EB;
 }
+
+
 
 .card button {
   margin-right: 10px;
